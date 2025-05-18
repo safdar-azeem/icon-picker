@@ -1,0 +1,38 @@
+{
+  "name": "iconify-icon-picker",
+  "version": "1.0.1",
+  "type": "module",
+  "author": "safdar-azeem",
+  "license": "MIT",
+  "description": "iconify Icon picker component for Vue 3",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "icon",
+    "picker",
+    "iconify",
+    "icon picker",
+    "find icon",
+    "icon-picker",
+    "vue-icon-picker",
+    "vue-icons"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.31",
+    "@iconify/vue": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/vue": "^2.0.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1",
+    "vue-tsc": "^2.0.21"
+  }
+}
