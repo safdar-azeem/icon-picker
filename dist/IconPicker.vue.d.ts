@@ -5,6 +5,7 @@ interface Props {
     debounce?: number;
     itemsPerPage?: number;
     paginationText?: string;
+    defaultIcons?: string[];
 }
 declare const _default: import('vue').DefineComponent<import('vue').ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<Props>, {
     placeholder: string;
