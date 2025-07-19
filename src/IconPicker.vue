@@ -9,6 +9,7 @@ interface Props {
 	debounce?: number
 	itemsPerPage?: number
 	paginationText?: string
+	defaultIcons?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -39,9 +40,12 @@ const totalPages = computed(() =>
 const paginatedIcons = computed(() => {
 	const start = (currentPage.value - 1) * props.itemsPerPage
 	const end = start + props.itemsPerPage
-	return iconsResult.value.slice(start, end)
+	const result = iconsResult.value.slice(start, end)
+	return result?.length > 1 ? result : props.defaultIcons || []
 })
-const hasResults = computed(() => iconsResult.value.length > 0)
+
+const hasResults = computed(() => paginatedIcons.value.length > 0)
+
 const formattedPaginationText = computed(() => {
 	return props.paginationText
 		.replace('{0}', String(currentPage.value))
