@@ -20,12 +20,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
 	(e: 'update:modelValue', value: string): void
-	(e: 'onSelect', value: string): void
+	(e: 'onSelect', value: string, svg: string): void
 }>()
 
 const searchQuery = ref('')
 const iconsResult = ref<string[]>([])
 const isLoading = ref(false)
+const iconRef = ref<HTMLButtonElement[]>([])
 const selectedIcon = ref(props?.value || props.modelValue)
 const cache = ref<Record<string, string[]>>({})
 let debounceTimeout: ReturnType<typeof setTimeout>
@@ -47,10 +48,11 @@ const formattedPaginationText = computed(() => {
 		.replace('{1}', String(totalPages.value))
 })
 
-const handleIconSelect = (icon: string) => {
+const handleIconSelect = (icon: string, index: number) => {
 	selectedIcon.value = icon
+	const svg = iconRef?.value?.[index]?.innerHTML
 	emit('update:modelValue', icon)
-	emit('onSelect', icon)
+	emit('onSelect', icon, svg)
 }
 
 const searchIcons = async () => {
@@ -148,15 +150,16 @@ onUnmounted(() => {
 				v-else-if="hasResults"
 				class="icon-picker__grid">
 				<button
-					v-for="icon in paginatedIcons"
+					v-for="(icon, index) in paginatedIcons"
 					:key="icon"
+					ref="iconRef"
 					class="icon-picker__icon-btn"
 					:class="{
 						'icon-picker__icon-btn--selected':
 							icon === selectedIcon,
 					}"
 					:title="icon"
-					@click="handleIconSelect(icon)"
+					@click="handleIconSelect(icon, index)"
 					type="button">
 					<Icon
 						:icon="icon"
