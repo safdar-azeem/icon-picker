@@ -327,10 +327,10 @@ function Ze(e, o) {
     Ye(d) || (h[m] = d.toString());
   };
   g("width", u), g("height", f);
-  const y = [n.left, n.top, a, c];
-  return h.viewBox = y.join(" "), {
+  const b = [n.left, n.top, a, c];
+  return h.viewBox = b.join(" "), {
     attributes: h,
-    viewBox: y,
+    viewBox: b,
     body: s
   };
 }
@@ -622,11 +622,11 @@ function bt(e, o, t, i) {
   const l = Date.now();
   let a = "pending", c = 0, u, f = null, h = [], g = [];
   typeof i == "function" && g.push(i);
-  function y() {
+  function b() {
     f && (clearTimeout(f), f = null);
   }
   function m() {
-    a === "pending" && (a = "aborted"), y(), h.forEach((p) => {
+    a === "pending" && (a = "aborted"), b(), h.forEach((p) => {
       p.status === "pending" && (p.status = "aborted");
     }), h = [];
   }
@@ -654,7 +654,7 @@ function bt(e, o, t, i) {
       p.status === "pending" && (p.status = "aborted");
     }), h = [];
   }
-  function x(p, v, b) {
+  function x(p, v, y) {
     const S = v !== "success";
     switch (h = h.filter((w) => w !== p), a) {
       case "pending":
@@ -667,30 +667,30 @@ function bt(e, o, t, i) {
         return;
     }
     if (v === "abort") {
-      u = b, _();
+      u = y, _();
       return;
     }
     if (S) {
-      u = b, h.length || (r.length ? C() : _());
+      u = y, h.length || (r.length ? C() : _());
       return;
     }
-    if (y(), I(), !e.random) {
+    if (b(), I(), !e.random) {
       const w = e.resources.indexOf(p.resource);
       w !== -1 && w !== e.index && (e.index = w);
     }
     a = "completed", g.forEach((w) => {
-      w(b);
+      w(y);
     });
   }
   function C() {
     if (a !== "pending")
       return;
-    y();
+    b();
     const p = r.shift();
     if (p === void 0) {
       if (h.length) {
         f = setTimeout(() => {
-          y(), a === "pending" && (I(), _());
+          b(), a === "pending" && (I(), _());
         }, e.timeout);
         return;
       }
@@ -700,8 +700,8 @@ function bt(e, o, t, i) {
     const v = {
       status: "pending",
       resource: p,
-      callback: (b, S) => {
-        x(v, b, S);
+      callback: (y, S) => {
+        x(v, y, S);
       }
     };
     h.push(v), c++, f = setTimeout(C, e.rotate), t(p, o, v.callback);
@@ -1040,14 +1040,14 @@ const pe = (e, o) => {
     let m = 0, d = o.id;
     return typeof d == "string" && (d = d.replace(/-/g, "_")), i.innerHTML = ot(a.body, d ? () => d + "ID" + m++ : "iconifyVue"), ee("svg", i);
   }
-  const { body: u, width: f, height: h } = e, g = n === "mask" || (n === "bg" ? !1 : u.indexOf("currentColor") !== -1), y = Ft(u, {
+  const { body: u, width: f, height: h } = e, g = n === "mask" || (n === "bg" ? !1 : u.indexOf("currentColor") !== -1), b = Ft(u, {
     ...c,
     width: f + "",
     height: h + ""
   });
   return i.style = {
     ...s,
-    "--svg": Lt(y),
+    "--svg": Lt(b),
     width: de(c.width),
     height: de(c.height),
     ...Mt,
@@ -1109,8 +1109,8 @@ const Nt = {
       return null;
     let f = qe(u);
     if (!f) {
-      const y = t.value;
-      return (!y || y.name !== c) && (f === null ? t.value = {
+      const b = t.value;
+      return (!b || b.name !== c) && (f === null ? t.value = {
         name: c
       } : t.value = {
         name: c,
@@ -1123,8 +1123,8 @@ const Nt = {
     const h = e.customise;
     if (h) {
       f = Object.assign({}, f);
-      const y = h(f.body, u.name, u.prefix, u.provider);
-      typeof y == "string" && (f.body = y);
+      const b = h(f.body, u.name, u.prefix, u.provider);
+      typeof b == "string" && (f.body = b);
     }
     const g = ["iconify"];
     return u.prefix !== "" && g.push("iconify--" + u.prefix), u.provider !== "" && g.push("iconify--" + u.provider), { data: f, classes: g };
@@ -1192,7 +1192,8 @@ const Nt = {
     placeholder: { default: "Search icons..." },
     debounce: { default: 300 },
     itemsPerPage: { default: 20 },
-    paginationText: { default: "Page {0} of {1}" }
+    paginationText: { default: "Page {0} of {1}" },
+    defaultIcons: {}
   },
   emits: ["update:modelValue", "onSelect"],
   setup(e, { emit: o }) {
@@ -1200,14 +1201,14 @@ const Nt = {
     let u;
     const f = k(1), h = O(() => s.value.length), g = O(
       () => Math.ceil(h.value / t.itemsPerPage)
-    ), y = O(() => {
-      const p = (f.value - 1) * t.itemsPerPage, v = p + t.itemsPerPage;
-      return s.value.slice(p, v);
-    }), m = O(() => s.value.length > 0), d = O(() => t.paginationText.replace("{0}", String(f.value)).replace("{1}", String(g.value))), P = (p, v) => {
+    ), b = O(() => {
+      const p = (f.value - 1) * t.itemsPerPage, v = p + t.itemsPerPage, y = s.value.slice(p, v);
+      return (y == null ? void 0 : y.length) > 1 ? y : t.defaultIcons || [];
+    }), m = O(() => b.value.length > 0), d = O(() => t.paginationText.replace("{0}", String(f.value)).replace("{1}", String(g.value))), P = (p, v) => {
       var S, w;
       a.value = p;
-      const b = (w = (S = l == null ? void 0 : l.value) == null ? void 0 : S[v]) == null ? void 0 : w.innerHTML;
-      i("update:modelValue", p), i("onSelect", p, b);
+      const y = (w = (S = l == null ? void 0 : l.value) == null ? void 0 : S[v]) == null ? void 0 : w.innerHTML;
+      i("update:modelValue", p), i("onSelect", p, y);
     }, _ = async () => {
       if (!n.value.trim()) {
         s.value = [];
@@ -1248,7 +1249,7 @@ const Nt = {
       }, [
         T("div", Dt, [
           Oe(T("input", {
-            "onUpdate:modelValue": v[0] || (v[0] = (b) => n.value = b),
+            "onUpdate:modelValue": v[0] || (v[0] = (y) => n.value = y),
             type: "text",
             placeholder: p.placeholder,
             class: "icon-picker__input",
@@ -1274,20 +1275,20 @@ const Nt = {
         r.value ? (F(), j("div", Qt, [
           L(A(R), { icon: "svg-spinners:270-ring" })
         ])) : m.value ? (F(), j("div", $t, [
-          (F(!0), j(Ae, null, Me(y.value, (b, S) => (F(), j("button", {
-            key: b,
+          (F(!0), j(Ae, null, Me(b.value, (y, S) => (F(), j("button", {
+            key: y,
             ref_for: !0,
             ref_key: "iconRef",
             ref: l,
             class: Ne(["icon-picker__icon-btn", {
-              "icon-picker__icon-btn--selected": b === a.value
+              "icon-picker__icon-btn--selected": y === a.value
             }]),
-            title: b,
-            onClick: (w) => P(b, S),
+            title: y,
+            onClick: (w) => P(y, S),
             type: "button"
           }, [
             L(A(R), {
-              icon: b,
+              icon: y,
               class: "icon-picker__icon"
             }, null, 8, ["icon"])
           ], 10, qt))), 128))
@@ -1321,7 +1322,7 @@ const Nt = {
   for (const [i, n] of o)
     t[i] = n;
   return t;
-}, Yt = /* @__PURE__ */ Jt(Wt, [["__scopeId", "data-v-00e1cb5b"]]);
+}, Yt = /* @__PURE__ */ Jt(Wt, [["__scopeId", "data-v-99947acf"]]);
 export {
   Yt as default
 };
